@@ -1,0 +1,32 @@
+<h2>Characteristics</h2>
+
+
+<!--
+<div *ngIf="chars">
+-->
+<ul class="heroes">
+  <li *ngFor="let c of chars | async;">
+    <button (click)="onSelect(c)">
+<!--
+    <button [class.selected]="c === selectedChar" type="button">
+-->
+      <div>{{c.label}}</div>
+    </button>
+  </li>
+</ul>
+<!--
+</div>
+-->
+
+
+<div *ngIf="selectedChar">
+  <h2>{{selectedChar.label | lowercase}} detail:</h2>
+
+  <label for="c_id">Char Label: </label>
+  <input  id="c_id" [(ngModel)]="selectedChar.id" placeholder="labello">
+
+  <label for="c_lab">Char Label: </label>
+  <input id="c_lab" [(ngModel)]="selectedChar.label" placeholder="labello">
+</div>
+
+

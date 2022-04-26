@@ -1,48 +1,56 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-class TestJson {
-  just = "";
-  num  = -1;
-};
+import { Characteristic } from './characteristic';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArmcharService {
 
-  test_json =   '/assets/test.json';
-
   //static_charsheetURI =   '/assets/summer1217.json';
-  //static_advancementURI = '/assets/adv_cieran.json';
-  //
-  //charsheetURI = 'http://localhost:8080/armchar/Character/' ;
-  //advancementURI = 'http://localhost:8080/armchar/Advancement/' ;
 
+  chars_json = '/assets/chars.json';
+  char_json  = '/assets/char.json';
 
-  //a : TestJson;
+  //chars: Characteristic[] = [
+  //  {
+  //    label : "Intelligence",
+  //    id : "INT",
+  //    value : +1,
+  //  },
+  //  {
+  //    label : "Perception",
+  //    id : "PER",
+  //    value : -1,
+  //  },
+  //];
+
+  chars?: Observable<Characteristic[]>;
 
   constructor(
     private http: HttpClient
   ) { }
 
-  getTestJson() {
-    //this.a
-    //let a = this.http.get<TestJson>(this.test_json).subscribe(
-    /*
-    let a = this.http.get(this.test_json).subscribe(
-      (raw_tj) => {
-        //let tj = new TestJson();
-        //tj.just = raw_tj.just;
-        //tj.num = raw_tj.num;
-        //return tj;
-        return raw_tj;
+  getCharacteristics(): Observable<Characteristic[]> {
+    console.log("getCharacteristics service");
+    //let c = this.http.get<Characteristic>(this.char_json);
+    /*.pipe(
+      (raw_json) => { return {
+        label : raw_json.label,
+        id    : raw_json.id,
+        value : raw_json.value,
+      }
       }
     );
-    //console.log(this.a);
-    console.log(a);
+    this.chars = [c];
+    return this.chars;
     */
-    console.log("HERE");
+    this.chars = this.http.get<Characteristic[]>(this.chars_json);
+    return this.chars;
+
+    //this.http.get<Characteristic[]>(this.chars_json);
   }
 
   /*

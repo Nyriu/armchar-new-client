@@ -1,0 +1,12 @@
+[
+  {
+    "label" : "Intelligence",
+    "id" : "INT",
+    "value" : 1
+  },
+  {
+    "label" : "Perception",
+    "id" : "PER",
+    "value" : -1
+  }
+]
