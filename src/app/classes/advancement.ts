@@ -1,24 +1,8 @@
-enum Season {
-  Winter,
-  Spring,
-  Summer,
-  Autumn,
-}
+import { Season } from '../utils/enums'
+import { Trait } from './trait'
 
-enum AdvancementType {
+export enum AdvancementType {
   Reading,
-}
-
-enum TraitClass {
-  Herbam,
-}
-
-class Trait {
-  addedXP?: number;
-  label?: string;
-  isSpecial?: boolean;
-  specialInfo?: string; // ad-hoc class in future?
-  id?: string;
 }
 
 export class Advancement {
@@ -37,7 +21,44 @@ export class Advancement {
   //  this.year = year;
   //}
 
-  // TODO
-  // parse
+  parse(x:any):void {
+    // ugly thing // refactor
+    if (x['advancementcontents']) {
+      let xac = x['advancementcontents'];
+      let fields = {
+        'season'      : 'arm:atSeason',
+        'awardXP'     : 'arm:awardsXP',
+        'description' : 'arm:hasAdvancementDescription',
+        'index'       : 'arm:hasAdvancementIndex',
+        //             ['advtype']['prefixedid']
+        'type'        :'arm:hasAdvancementTypeString',
+        'year'        :'arm:inYear',
+      }
+      //Object.keys(fields).forEach( // this doesn't work, maybe async stuff?
+      //  (l,r) => {
+      //    console.log(l,r);
+      //    if (xac[r])
+      //      (adv as any)[l] = xac[r];
+      //  }
+      //);
+      for (let l of Object.keys(fields)) {
+        let r = (fields as any)[l];
+        //console.log(l,r);
+        if (xac[r])
+          (this as any)[l] = xac[r];
+      }
+    }
+    //advancementid
+    if (x['advancementid'] && x['advancementid']['prefixedid']) {
+      this.id = x['advancementid']['prefixedid'];
+    }
+    // TODO
+    //advancementtraits
+    //if (x['advancementtraits']) {
+    //  adv.traits = [
+    //  ]
+    //}
+  }
+
 }
 
