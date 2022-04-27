@@ -6,6 +6,11 @@ import { map } from 'rxjs/operators';
 
 import { Advancement } from '../classes/advancement';
 
+interface TypeReturnedByPeps {
+  name: string;
+  age: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,11 +29,11 @@ export class ArmcharService {
 
     this.any_example();
     this.typed_example();
+    this.respone3();
 
     //return this.http.get<Advancement>(get_adv);
     return this.http.get<Advancement[]>(get_adv); // this line so that it compiles
   }
-
 
 
   // TAKE A LOOK HERE
@@ -44,6 +49,11 @@ export class ArmcharService {
     ]);
     let peps:Observable<any> = source.pipe(map(({ name, age }) => { return {name:name+"!", age:age+1}; }));
     // Q1: is peps an array? I don't think so, at list not explicitly
+    // J: peps is like a function that will return many values.
+    // J: You 'execute' peps when you subscribe to it. That is, peps.subscribe() execute peps.
+    // J: You consume the returned value from peps with the callback you pass to the subscribe method.
+    // J: In this case the "execution" of peps is always the same: it will return three values (the objects of Joe, Franck and Ryan).
+    // J: refs https://rxjs.dev/guide/observable#subscribing-to-observables
     peps.subscribe(val => console.log(val));
   }
 
@@ -55,8 +65,11 @@ export class ArmcharService {
       age?: number;
     }
 
-    const source:Observable<any> = from([
+    const source:Observable<TypeReturnedByPeps> = from([
     //const source:Observable<any[]> = from([ // NOT POSSIBLE // Q2: why?
+    // J: The observable don't return an array, it return three values, one by one.
+    // J: You pass the type of a single value. In this case the type is
+    // an objecto with 'name' and 'age' properties.
       { name: 'Joe', age: 30 },
       { name: 'Frank', age: 20 },
       { name: 'Ryan', age: 50 }
@@ -65,7 +78,32 @@ export class ArmcharService {
     // Q3: peps type does not suggest it is an array. What if I wanted to return 
     // Observable<Pep[]>
     // ?
+    // J: response below, see respone3
+    //
     // Q4: do we need to subscribe and save the values to a not Observable array?
+
+    peps.subscribe(val => console.log(val));
+  }
+
+
+
+  respone3 () {
+    console.log("respone3");
+
+    class Pep {
+      name?: string;
+      age?: number;
+    }
+
+    // Here we have the Pep[]
+    const source:Observable<Pep[]> = from([
+      [{ name: 'Joe', age: 30 }, { name: 'Frank', age: 20 }, { name: 'Ryan', age: 50 }] // here there is the array Pep[]
+    ]);
+
+    //let peps:Observable<Pep> = source.pipe(map(({ name, age }) => { return {name:name+"!", age:age+1}; }));
+    // Just as example, the upper line becomes:
+    let peps:Observable<Pep[]> = source.pipe(map( arrayOfPep => {return arrayOfPep.map((pep) => { return {name:pep.name+"!", age:pep.age && pep.age+1}; } ) } ));
+    // not really readeble, but it does the trick                                                                                ^^^^^^^^^^-- hack for the compiler
 
     peps.subscribe(val => console.log(val));
   }
