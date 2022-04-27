@@ -17,8 +17,8 @@ export class ArmcharService {
 
 
   getAdvancements(): Observable<Advancement[]> {
-    //let get_adv = 'http://localhost:3000/adv/cieran';
-    let get_adv = '../../assets/adv_cieran.json' // use this static file if server unavailable
+    let get_adv = 'http://localhost:3000/adv/cieran';
+    //let get_adv = '../../assets/adv_cieran.json' // use this static file if server unavailable
 
     //console.log("getAdvancements()");
 
@@ -31,16 +31,44 @@ export class ArmcharService {
           for (let x of d) {
             let adv = new Advancement();
 
-            // ugly thing
-            if (x['advancementcontents'] && x['advancementcontents']['arm:hasAdvancementDescription']) {
-              adv.description = x['advancementcontents']['arm:hasAdvancementDescription'];
+            // ugly thing // refactor
+            if (x['advancementcontents']) {
+              let xac = x['advancementcontents'];
+              let fields = {
+                'season'      : 'arm:atSeason',
+                'awardXP'     : 'arm:awardsXP',
+                'description' : 'arm:hasAdvancementDescription',
+                'index'       : 'arm:hasAdvancementIndex',
+                //             ['advtype']['prefixedid']
+                'type'        :'arm:hasAdvancementTypeString',
+                'year'        :'arm:inYear',
+              }
+              //Object.keys(fields).forEach( // this doesn't work, maybe async stuff?
+              //  (l,r) => {
+              //    console.log(l,r);
+              //    if (xac[r])
+              //      (adv as any)[l] = xac[r];
+              //  }
+              //);
+              for (let l of Object.keys(fields)) {
+                let r = (fields as any)[l];
+                //console.log(l,r);
+                if (xac[r])
+                  (adv as any)[l] = xac[r];
+              }
             }
-            if (x['advancementcontents'] && x['advancementcontents']['arm:inYear']) {
-              //adv.year = x['advancementcontents']['arm:inYear'];
+            //advancementid
+            if (x['advancementid'] && x['advancementid']['prefixedid']) {
+              adv.id = x['advancementid']['prefixedid'];
             }
-            // add other fields
-            // refactor
-            advs.push(adv);
+            // TODO
+            //advancementtraits
+            //if (x['advancementtraits']) {
+            //  adv.traits = [
+            //  ]
+            //}
+
+            advs.push(adv as Advancement);
           }
           return advs;
         }

@@ -1,5 +1,11 @@
 <div *ngIf="adv">
   <h2>Hugly Adv</h2>
-  <p *ngIf="adv.description">{{ adv.description }}</p>
-  <p *ngIf="adv.year"> {{ adv.year }}</p>
+  <p *ngIf="adv.year       ">year       : {{ adv.year        }}</p>
+  <p *ngIf="adv.season     ">season     : {{ adv.season      }}</p>
+  <p *ngIf="adv.awardXP    ">awardXP    : {{ adv.awardXP     }}</p>
+  <p *ngIf="adv.description">description: {{ adv.description }}</p>
+  <p *ngIf="adv.index      ">index      : {{ adv.index       }}</p>
+  <p *ngIf="adv.type       ">type       : {{ adv.type        }}</p>
+  <!-- <p *ngIf="adv.traits     ">{{ adv.traits      }}</p> -->
+  <p *ngIf="adv.id         ">{{ adv.id          }}</p>
 </div>
