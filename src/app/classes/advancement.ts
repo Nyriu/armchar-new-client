@@ -26,7 +26,7 @@ export class Advancement {
     if (x['advancementcontents']) {
       let xac = x['advancementcontents'];
       let fields = {
-        'season'      : 'arm:atSeason',
+        'season'      : 'arm:atSeason', // TODO convert to enum Season
         'awardXP'     : 'arm:awardsXP',
         'description' : 'arm:hasAdvancementDescription',
         'index'       : 'arm:hasAdvancementIndex',
@@ -53,11 +53,14 @@ export class Advancement {
       this.id = x['advancementid']['prefixedid'];
     }
     // TODO
-    //advancementtraits
-    //if (x['advancementtraits']) {
-    //  adv.traits = [
-    //  ]
-    //}
+    if (x['advancementtraits']) {
+      if (! this.traits) this.traits = [];
+      for (let y of x['advancementtraits']) {
+        let t = new Trait();
+        t.parse(y);
+        this.traits.push(t);
+      }
+    }
   }
 
 }

@@ -6,6 +6,16 @@
   <p *ngIf="adv.description">description: {{ adv.description }}</p>
   <p *ngIf="adv.index      ">index      : {{ adv.index       }}</p>
   <p *ngIf="adv.type       ">type       : {{ adv.type        }}</p>
-  <!-- <p *ngIf="adv.traits     ">{{ adv.traits      }}</p> -->
-  <p *ngIf="adv.id         ">{{ adv.id          }}</p>
+  <div *ngIf="adv.traits">
+    <p>Traits:</p>
+    <ul>
+      <li *ngFor="let t of adv.traits">
+        <p *ngIf="t.addedXP">addedXP : {{ t.addedXP  }}</p>
+        <p *ngIf="t.label  ">label   : {{ t.label    }}</p>
+        <p *ngIf="t.class  ">class   : {{ t.class    }}</p>
+        <p *ngIf="t.id     ">id      : {{ t.id       }}</p>
+      </li>
+    </ul>
+  </div>
+  <p *ngIf="adv.id         ">id         : {{ adv.id          }}</p>
 </div>
