@@ -1,9 +1,5 @@
 <div *ngIf="adv">
-  <!-- <div *ngIf="adv"> -->
-  <!-- <div *ngIf="adv | sync"> -->
-  <!-- <h2>{{adv.description | lowercase}}</h2> -->
-  <!-- <h2>{{adv.year}}</h2> -->
-  <p>Nice Advancement</p>
-  <p>Desc: {{adv.description | lowercase}}</p>
+  <h2>Hugly Adv</h2>
+  <p *ngIf="adv.description">{{ adv.description }}</p>
+  <p *ngIf="adv.year"> {{ adv.year }}</p>
 </div>
-

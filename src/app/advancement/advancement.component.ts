@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { Observable } from 'rxjs';
+
 import { Advancement } from '../classes/advancement';
 
 @Component({
@@ -9,6 +11,7 @@ import { Advancement } from '../classes/advancement';
 })
 export class AdvancementComponent implements OnInit {
 
+  //@Input() adv?: Observable<Advancement>;
   @Input() adv?: Advancement;
 
   constructor() {

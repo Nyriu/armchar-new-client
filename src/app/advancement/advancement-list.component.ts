@@ -13,9 +13,7 @@ import { ArmcharService } from '../armchar/armchar.service';
 })
 export class AdvancementListComponent implements OnInit {
 
-  advs?: Observable<Advancement[]>; // need array to use
-                                    // *ngFor="let adv of advs | async">
-  //advs?: Observable<Advancement>;
+  advs?: Observable<Advancement[]>;
 
   constructor(private armcharService: ArmcharService) {
   }
@@ -27,9 +25,7 @@ export class AdvancementListComponent implements OnInit {
   getAdvancements(): void {
     this.advs = this.armcharService.getAdvancements();
     this.advs.subscribe(
-      (data) => {
-        console.log(data);
-      }
+      (data) => console.log("look an array!", data)
     );
   }
 
