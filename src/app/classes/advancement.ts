@@ -75,8 +75,11 @@ export class Advancement {
   traits?: Trait[];
   id?: string;
 
-  constructor () {
-  }
+  constructor () {}
+  //constructor (description: string, year:number) {
+  //  this.description = description;
+  //  this.year = year;
+  //}
 
   // TODO
   // parse

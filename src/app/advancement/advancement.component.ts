@@ -1,9 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Observable } from 'rxjs';
-
 import { Advancement } from '../classes/advancement';
-import { ArmcharService } from '../armchar/armchar.service';
 
 @Component({
   selector: 'app-advancement',
@@ -12,22 +9,12 @@ import { ArmcharService } from '../armchar/armchar.service';
 })
 export class AdvancementComponent implements OnInit {
 
-  @Input() advs?: Observable<Advancement[]>;
+  @Input() adv?: Advancement;
 
-  constructor(private armcharService: ArmcharService) {
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.getAdvancement();
-  }
-
-  getAdvancement(): void {
-    this.advs = this.armcharService.getAdvancements();
-    this.advs.subscribe(
-      (data) => {
-        console.log(data);
-      }
-    );
   }
 
 }

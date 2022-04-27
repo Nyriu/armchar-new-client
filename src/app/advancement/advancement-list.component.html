@@ -1,1 +1,11 @@
-<p>advancement-list works!</p>
+<p>advancement-list:</p>
+
+<div *ngIf="advs | async">
+  <ul>
+    <li> elem </li>
+    <li *ngFor="let adv of advs | async">
+      <app-advancement [adv]="adv"></app-advancement>
+    </li>
+  </ul>
+</div>
+
