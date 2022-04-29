@@ -31,4 +31,19 @@ export class ArmcharService {
         }));
   }
 
+  getPregameAdvancements(): Observable<Advancement[]> {
+    let get_adv = 'http://localhost:3000/pregameadvancement/cieran';
+    //let get_adv = '../../assets/pregame_adv_cieran.json' // use this static file if server unavailable
+    return this.http.get<any[]>(get_adv).pipe(map(
+        (data:any[]) => {
+          let advs: Advancement[] = [];
+          for (let x of data) {
+            let adv = new Advancement();
+            adv.parse(x);
+            advs.push(adv);
+          }
+          return advs;
+        }));
+  }
+
 }
